@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#102f43">
+<title>Portal Panduan Guru | 17 SDG UMPSA</title>
+<style>
+:root{--navy:#102f43;--blue:#174e68;--teal:#168b83;--gold:#f2b84b;--paper:#f4f7f8;--ink:#18313e;--muted:#627680;--line:#dce5e8}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+header{background:linear-gradient(120deg,#102f43,#17647a);color:white;padding:26px clamp(18px,4vw,54px) 30px}
+.head{max-width:1220px;margin:auto}.eyebrow{letter-spacing:.14em;text-transform:uppercase;color:#b9d8dc;font-size:11px;font-weight:800}
+h1{font-size:clamp(28px,5vw,48px);line-height:1.05;margin:8px 0 10px;letter-spacing:-.04em}.sub{color:#d7e8eb;max-width:720px;margin:0}
+nav{background:white;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10;overflow:auto}
+.navinner{max-width:1220px;margin:auto;display:flex;gap:6px;padding:9px 14px;white-space:nowrap}
+nav button{border:0;background:transparent;color:#48616c;padding:10px 14px;border-radius:9px;font-weight:700;cursor:pointer}
+nav button.active,nav button:hover{background:#e8f2f3;color:#0c5c62}
+main{max-width:1220px;margin:24px auto;padding:0 16px 48px}
+.panel{display:none}.panel.active{display:block}
+.sectionhead{display:flex;justify-content:space-between;align-items:end;gap:18px;margin:8px 0 16px}
+h2{font-size:clamp(23px,3vw,31px);margin:0;letter-spacing:-.03em}.lead{color:var(--muted);margin:5px 0 0}
+.mapbox{position:relative;background:#d8e2e4;border-radius:18px;overflow:hidden;box-shadow:0 8px 28px #17394a18}
+.mapbox img{display:block;width:100%;height:auto}
+.pin{position:absolute;transform:translate(-50%,-100%);border:2px solid white;border-radius:18px 18px 18px 3px;background:#133f57;color:white;min-width:34px;height:34px;padding:0 7px;font-size:12px;font-weight:900;box-shadow:0 3px 12px #0005;cursor:pointer}
+.pin:hover,.pin:focus{z-index:4;transform:translate(-50%,-100%) scale(1.16);background:#e49c22;color:#172c35}
+.maplegend{display:flex;flex-wrap:wrap;gap:8px;margin:13px 0}.legendchip{background:white;border:1px solid var(--line);padding:6px 10px;border-radius:30px;font-size:12px;color:#415a65}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:13px}
+.card{background:white;border:1px solid var(--line);border-radius:15px;padding:16px;box-shadow:0 3px 12px #17394a09}
+.sdgcard{display:flex;gap:13px;align-items:flex-start;min-height:142px}.num{width:48px;height:48px;flex:0 0 48px;border-radius:12px;background:#e9f0f2;color:#123e51;display:grid;place-items:center;font-size:20px;font-weight:900}
+.sdgcard h3{font-size:16px;margin:0 0 3px}.sdgcard p{font-size:13px;color:var(--muted);margin:0 0 8px}
+a{color:#087a83;font-weight:750;text-decoration:none}a:hover{text-decoration:underline}
+.small{font-size:12px;color:var(--muted)}.tag{display:inline-block;background:#eef5f4;color:#276d69;border-radius:30px;padding:3px 8px;font-size:11px;font-weight:800}
+.zonehead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+select,input{font:inherit;border:1px solid var(--line);background:white;border-radius:9px;padding:10px 12px;color:var(--ink)}
+.zonegrid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(250px,.8fr);gap:16px}
+.zoneinfo h3{margin:0 0 5px}.zoneinfo ul{padding-left:19px;margin:10px 0}.zoneinfo li{margin:5px 0}
+.sdgdetail{display:grid;grid-template-columns:1fr 1fr;gap:14px}.sdgdetail .card{padding:20px}
+.detailtitle{display:flex;align-items:center;gap:14px;margin-bottom:14px}.detailtitle .num{width:60px;height:60px;font-size:24px}
+.btn{display:inline-block;background:var(--navy);color:white!important;padding:10px 14px;border-radius:9px;font-size:13px}
+.notice{background:#fff8e7;border:1px solid #f0dca7;padding:12px 14px;border-radius:12px;color:#72541b;font-size:13px;margin-top:12px}
+footer{background:#102f43;color:#d2e2e6;padding:24px;text-align:center;font-size:12px}
+@media(max-width:760px){.zonegrid,.sdgdetail{grid-template-columns:1fr}.sectionhead{align-items:start;flex-direction:column}.pin{min-width:30px;height:30px;font-size:10px}}
+</style>
+</head>
+<body>
+<header><div class="head"><div class="eyebrow">International Scouts Pahang 2026 · UMPSA Kampus Gambang</div><h1>Portal Panduan Guru<br>17 Sustainable Development Goals</h1><p class="sub">Peta lokasi, zon aktiviti dan panduan setiap SDG dalam satu portal rujukan untuk guru.</p></div></header>
+<nav><div class="navinner">
+<button class="active" data-tab="overview">Peta keseluruhan</button><button data-tab="zones">Peta mengikut zon</button><button data-tab="sdgs">17 SDG</button><button data-tab="downloads">Dokumen PDF</button>
+</div></nav>
+<main>
+<section id="overview" class="panel active">
+<div class="sectionhead"><div><h2>Peta keseluruhan kampus</h2><p class="lead">Pilih pin bernombor untuk melihat SDG dan zon rujukannya.</p></div><span class="tag">Peta satelit dibekalkan</span></div>
+<div class="mapbox" id="overviewMap"><img src="assets/ump_satellite.jpeg" alt="Peta satelit UMPSA Kampus Gambang"></div>
+<div class="maplegend" id="overviewLegend"></div>
+<div class="notice">Nota ketepatan: pin menunjukkan kedudukan zon rujukan berdasarkan peta zon dan maklumat dalam PDF asal. Ia ialah penanda panduan kawasan, bukan koordinat ukur atau lokasi GPS tepat bagi setiap gerai. Tangkapan satelit yang dibekalkan tidak memaparkan Tasik Paya Besar sepenuhnya; rujuk peta zon asal bagi Zon E.</div>
+<div class="sectionhead" style="margin-top:28px"><div><h2>Ringkasan mengikut zon</h2><p class="lead">Pilih zon untuk membuka paparan peta yang lebih dekat.</p></div></div>
+<div class="grid" id="zoneCards"></div>
+</section>
+<section id="zones" class="panel">
+<div class="sectionhead"><div><h2>Peta terperinci mengikut zon</h2><p class="lead">Pilih Zon A hingga Zon F untuk memfokuskan kawasan berkenaan.</p></div></div>
+<div class="zonehead"><select id="zoneSelect" aria-label="Pilih zon"></select><span class="small" id="zoneCount"></span></div>
+<div class="zonegrid">
+<div><div class="mapbox" id="zoneMap"><img id="zoneImage" src="assets/zones/zone_A.jpg" alt="Peta satelit Zon A"></div><div class="maplegend" id="zoneLegend"></div></div>
+<div class="card zoneinfo" id="zoneInfo"></div>
+</div>
+</section>
+<section id="sdgs" class="panel">
+<div class="sectionhead"><div><h2>Direktori 17 SDG</h2><p class="lead">Ringkasan matlamat dan zon lokasi berdasarkan dokumen program.</p></div><input id="sdgSearch" placeholder="Cari SDG atau kata kunci…" aria-label="Cari SDG"></div>
+<div class="grid" id="sdgGrid"></div>
+</section>
+<section id="downloads" class="panel">
+<div class="sectionhead"><div><h2>Dokumen panduan PDF</h2><p class="lead">Setiap fail mengandungi halaman asal bagi SDG berkenaan, tanpa reka bentuk semula atau penukaran kandungan.</p></div></div>
+<div class="grid" id="pdfGrid"></div>
+</section>
+</main>
+<footer>Portal Panduan Guru · 17 SDG · UMPSA Kampus Gambang<br>Maklumat SDG dan nombor halaman dirujuk daripada SCOUT PAHANG.pdf. Peta satelit ialah imej yang dibekalkan pengguna.</footer>
+<script>
+const DATA = {"sdgs": [{"n": 1, "en": "No Poverty", "ms": "Tiada Kemiskinan", "zone": "A", "pages": "20–23", "desc": "Menghapuskan kemiskinan dalam semua bentuk dan di semua tempat.", "pdf": "pdf/SDG01.pdf"}, {"n": 2, "en": "Zero Hunger", "ms": "Sifar Kelaparan", "zone": "E", "pages": "24–27", "desc": "Membasmi kelaparan, meningkatkan keselamatan makanan dan pemakanan serta menggalakkan pertanian mampan.", "pdf": "pdf/SDG02.pdf"}, {"n": 3, "en": "Good Health and Well-being", "ms": "Kesihatan Baik dan Kesejahteraan", "zone": "B", "pages": "28–31", "desc": "Memastikan kehidupan yang sihat dan menggalakkan kesejahteraan untuk semua pada setiap peringkat umur.", "pdf": "pdf/SDG03.pdf"}, {"n": 4, "en": "Quality Education", "ms": "Pendidikan Berkualiti", "zone": "C", "pages": "32–36", "desc": "Memastikan pendidikan berkualiti, inklusif dan saksama serta peluang pembelajaran sepanjang hayat.", "pdf": "pdf/SDG04.pdf"}, {"n": 5, "en": "Gender Equality", "ms": "Kesaksamaan Gender", "zone": "A", "pages": "37–41", "desc": "Mencapai kesaksamaan gender serta memperkasa semua wanita dan kanak-kanak perempuan.", "pdf": "pdf/SDG05.pdf"}, {"n": 6, "en": "Clean Water and Sanitation", "ms": "Air Bersih dan Sanitasi", "zone": "E", "pages": "42–45", "desc": "Memastikan ketersediaan serta pengurusan air bersih dan sanitasi yang mampan untuk semua.", "pdf": "pdf/SDG06.pdf"}, {"n": 7, "en": "Affordable and Clean Energy", "ms": "Tenaga Bersih dan Berpatutan", "zone": "B", "pages": "46–48", "desc": "Memastikan akses kepada tenaga yang berpatutan, boleh dipercayai, mampan dan moden untuk semua.", "pdf": "pdf/SDG07.pdf"}, {"n": 8, "en": "Decent Work and Economic Growth", "ms": "Pekerjaan Layak dan Pertumbuhan Ekonomi", "zone": "C", "pages": "49–53", "desc": "Menggalakkan pertumbuhan ekonomi yang mampan dan pekerjaan yang produktif serta layak.", "pdf": "pdf/SDG08.pdf"}, {"n": 9, "en": "Industry, Innovation and Infrastructure", "ms": "Industri, Inovasi dan Infrastruktur", "zone": "F", "pages": "54–56", "desc": "Membina infrastruktur berdaya tahan, menggalakkan perindustrian inklusif dan memupuk inovasi.", "pdf": "pdf/SDG09.pdf"}, {"n": 10, "en": "Reduced Inequalities", "ms": "Mengurangkan Ketidaksamaan", "zone": "D", "pages": "57–59", "desc": "Mengurangkan ketidaksamaan dalam dan antara negara serta memastikan peluang yang adil untuk semua.", "pdf": "pdf/SDG10.pdf"}, {"n": 11, "en": "Sustainable Cities and Communities", "ms": "Bandar dan Komuniti Mampan", "zone": "C", "pages": "60–63", "desc": "Menjadikan bandar dan penempatan manusia inklusif, selamat, berdaya tahan dan mampan.", "pdf": "pdf/SDG11.pdf"}, {"n": 12, "en": "Responsible Consumption and Production", "ms": "Penggunaan dan Pengeluaran Bertanggungjawab", "zone": "D", "pages": "64–68", "desc": "Memastikan corak penggunaan dan pengeluaran yang mampan.", "pdf": "pdf/SDG12.pdf"}, {"n": 13, "en": "Climate Action", "ms": "Tindakan terhadap Perubahan Iklim", "zone": "F", "pages": "69–71", "desc": "Mengambil tindakan segera untuk menangani perubahan iklim dan kesannya.", "pdf": "pdf/SDG13.pdf"}, {"n": 14, "en": "Life Below Water", "ms": "Hidupan di Bawah Air", "zone": "E", "pages": "72–74", "desc": "Memulihara dan menggunakan lautan, laut dan sumber marin secara mampan.", "pdf": "pdf/SDG14.pdf"}, {"n": 15, "en": "Life on Land", "ms": "Hidupan di Darat", "zone": "B", "pages": "75–78", "desc": "Melindungi, memulihara dan memulihkan ekosistem daratan serta menghentikan kehilangan biodiversiti.", "pdf": "pdf/SDG15.pdf"}, {"n": 16, "en": "Peace, Justice and Strong Institutions", "ms": "Keamanan, Keadilan dan Institusi Kukuh", "zone": "A / C", "pages": "79–89", "desc": "Menggalakkan masyarakat aman dan inklusif, akses kepada keadilan serta institusi yang berkesan.", "pdf": "pdf/SDG16.pdf"}, {"n": 17, "en": "Partnerships for the Goals", "ms": "Kerjasama demi Matlamat", "zone": "A / E", "pages": "90–93", "desc": "Mengukuhkan kerjasama dan perkongsian untuk mencapai semua matlamat pembangunan mampan.", "pdf": "pdf/SDG17.pdf"}], "zones": {"A": "Campus Forecourt", "B": "Field / Sports Complex", "C": "Court Frontage", "D": "Courtyard", "E": "Tasik Paya Besar / The East", "F": "Industrial Park"}, "zoneNotes": {"A": "Kawasan hadapan kampus. Peta satelit dibesarkan untuk membantu guru mengenal pasti bangunan dan ruang aktiviti.", "B": "Kawasan padang dan kompleks sukan, termasuk Mini Stadium UMPSA.", "C": "Kawasan gelanggang dan ruang hadapan bangunan. SDG 16 juga mempunyai aktiviti rujukan di zon ini.", "D": "Kawasan courtyard / ruang tengah kampus.", "E": "Lokasi Tasik Paya Besar. Tasik tidak kelihatan dalam tangkapan satelit yang dibekalkan; peta zon asal daripada PDF disertakan sebagai rujukan tambahan.", "F": "Kawasan taman perindustrian / bangunan industri dan teknologi."}, "pins": {"A": [{"sdg": 1, "x": 43, "y": 31}, {"sdg": 5, "x": 48, "y": 36}, {"sdg": 16, "x": 51, "y": 28}, {"sdg": 17, "x": 39, "y": 43}], "B": [{"sdg": 3, "x": 69, "y": 58}, {"sdg": 7, "x": 63, "y": 48}, {"sdg": 15, "x": 74, "y": 64}], "C": [{"sdg": 4, "x": 44, "y": 50}, {"sdg": 8, "x": 49, "y": 55}, {"sdg": 11, "x": 40, "y": 59}, {"sdg": 16, "x": 53, "y": 48}], "D": [{"sdg": 10, "x": 57, "y": 39}, {"sdg": 12, "x": 52, "y": 44}], "E": [{"sdg": 2, "x": 85, "y": 74}, {"sdg": 6, "x": 88, "y": 68}, {"sdg": 14, "x": 92, "y": 80}, {"sdg": 17, "x": 82, "y": 62}], "F": [{"sdg": 9, "x": 69, "y": 13}, {"sdg": 13, "x": 77, "y": 22}]}};
+const $ = s => document.querySelector(s);
+function go(tab){document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===tab));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));window.scrollTo({top:0,behavior:'smooth'});}
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>go(b.dataset.tab)));
+function zoneSdgs(z){return DATA.sdgs.filter(s=>s.zone.split(' / ').includes(z));}
+function addPins(target,zones){
+  target.querySelectorAll('.pin').forEach(p=>p.remove());
+  for(const z of zones){for(const pin of DATA.pins[z]||[]){const b=document.createElement('button');b.className='pin';b.style.left=pin.x+'%';b.style.top=pin.y+'%';b.textContent=pin.sdg;b.title='SDG '+pin.sdg+' · Zon '+z;b.setAttribute('aria-label','SDG '+pin.sdg+', Zon '+z);b.onclick=()=>{go('sdgs');$('#sdgSearch').value='SDG '+pin.sdg;renderSdgs();};target.appendChild(b);}}
+}
+function renderLegend(el,zones){el.innerHTML='';const seen=new Set();zones.forEach(z=>(DATA.pins[z]||[]).forEach(p=>{if(!seen.has(p.sdg)){seen.add(p.sdg);const s=DATA.sdgs.find(x=>x.n===p.sdg);const span=document.createElement('span');span.className='legendchip';span.textContent='SDG '+s.n+' · '+s.ms;el.appendChild(span);}}));}
+addPins($('#overviewMap'),['A','B','C','D']);renderLegend($('#overviewLegend'),['A','B','C','D']);
+const off=document.createElement('div');off.className='notice';off.innerHTML='<b>Lokasi di luar bingkai satelit ini:</b> Zon E (The East / Tasik Paya Besar) dan Zon F (Industrial Park / Kampus Paya Besar). Kedua-duanya ditandakan sebagai lokasi luar peta, bukan pin GPS di dalam kawasan UMPSA Gambang.';$('#overviewLegend').after(off);
+const offgrid=document.createElement('div');offgrid.className='grid';offgrid.style.marginTop='10px';
+offgrid.innerHTML='<div class="card"><span class="tag">ZON E · LUAR BINGKAI</span><h3>The East / Tasik Paya Besar</h3><p class="small">SDG 2, 6, 14 dan SDG Action Zone 17</p><a href="#" data-zone="E">Lihat peta zon asal →</a></div><div class="card"><span class="tag">ZON F · LUAR BINGKAI</span><h3>Industrial Park / Kampus Paya Besar</h3><p class="small">SDG 9 dan 13</p><a href="#" data-zone="F">Lihat peta zon asal →</a></div>';
+offgrid.querySelectorAll('a').forEach(a=>a.onclick=e=>{e.preventDefault();$('#zoneSelect').value=a.dataset.zone;renderZone();go('zones');});off.after(offgrid);
+const zcards=$('#zoneCards');
+Object.entries(DATA.zones).forEach(([z,name])=>{const c=document.createElement('div');c.className='card';const list=zoneSdgs(z).map(s=>'SDG '+s.n).join(', ')||'Rujukan tambahan';c.innerHTML=`<span class="tag">ZON ${z}</span><h3>${name}</h3><p class="small">${list}</p><a href="#" data-zone="${z}">Buka peta zon →</a>`;c.querySelector('a').onclick=e=>{e.preventDefault();$('#zoneSelect').value=z;renderZone();go('zones');};zcards.appendChild(c);});
+const zs=$('#zoneSelect');Object.entries(DATA.zones).forEach(([z,name])=>{const o=document.createElement('option');o.value=z;o.textContent='Zon '+z+' — '+name;zs.appendChild(o);});zs.onchange=renderZone;
+function renderZone(){const z=zs.value;$('#zoneImage').src='assets/zones/zone_'+z+'.jpg';$('#zoneImage').alt='Peta satelit Zon '+z;$('#zoneCount').textContent=zoneSdgs(z).length+' SDG utama';const map=$('#zoneMap');addPins(map,[z]);renderLegend($('#zoneLegend'),[z]);const info=$('#zoneInfo');const entries=zoneSdgs(z);info.innerHTML=`<span class="tag">ZON ${z}</span><h3>${DATA.zones[z]}</h3><p>${DATA.zoneNotes[z]}</p><h4>SDG dalam zon ini</h4><ul>${entries.map(s=>`<li><b>SDG ${s.n} — ${s.ms}</b><br><span class="small">${s.en}</span></li>`).join('')}</ul><p class="small">Rujuk peta zon asal PDF pada halaman ${({A:'10',B:'11',C:'12',D:'13',E:'14–15',F:'16–17'})[z]}.</p>${(z==='E'||z==='F')?'<div class="notice">Lokasi ini ditandakan sebagai “Beyond Map” dalam direktori asal dan tidak kelihatan dalam tangkapan satelit UMPSA Gambang yang dibekalkan. Oleh itu, gunakan peta zon asal di bawah sebagai rujukan lokasi; tiada pin GPS direka.</div>':''}<div style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn" href="assets/zones/source_map_page_${({A:10,B:11,C:12,D:13,E:15,F:17})[z]}.jpg" target="_blank">Lihat peta zon asal</a>${(z==='E'||z==='F')?`<a class="btn" href="assets/zones/source_map_page_${z==='E'?14:16}.jpg" target="_blank">Lihat halaman peta tambahan</a>`:''}</div>`;}
+renderZone();
+function card(s){return `<article class="card sdgcard"><div class="num">${String(s.n).padStart(2,'0')}</div><div><h3>SDG ${s.n} · ${s.ms}</h3><p>${s.en}</p><p>${s.desc}</p><span class="tag">Zon ${s.zone}</span><p class="small">PDF asal: halaman ${s.pages}</p><a href="${s.pdf}" target="_blank">Buka panduan PDF →</a></div></article>`;}
+function renderSdgs(){const q=$('#sdgSearch').value.toLowerCase();$('#sdgGrid').innerHTML=DATA.sdgs.filter(s=>('sdg '+s.n+' '+s.ms+' '+s.en+' '+s.zone+' '+s.desc).toLowerCase().includes(q)).map(card).join('');}
+$('#sdgSearch').addEventListener('input',renderSdgs);renderSdgs();
+$('#pdfGrid').innerHTML=DATA.sdgs.map(s=>`<article class="card"><span class="tag">SDG ${String(s.n).padStart(2,'0')}</span><h3>${s.ms}</h3><p class="small">Halaman asal ${s.pages} · ${s.zone}</p><a class="btn" href="${s.pdf}" download>↓ Muat turun PDF</a></article>`).join('');
+</script>
+</body></html>
