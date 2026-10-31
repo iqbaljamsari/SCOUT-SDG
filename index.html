@@ -53,11 +53,11 @@ footer{background:#102f43;color:#d6e5e8;text-align:center;padding:22px;font-size
 <body>
 <header><div class="eyebrow">Pahang International Scouts for SDGs Festival 2026</div><h1>SCOUT SDG<br>Portal Panduan Guru</h1><p class="sub">Rujukan peta lokasi, kawasan aktiviti dan dokumen 17 Sustainable Development Goals berdasarkan peta program yang dibekalkan.</p></header>
 <nav><div class="navinner">
-<button class="active" data-tab="map">Peta lokasi</button><button data-tab="directory">Direktori 17 SDG</button><button data-tab="pdfs">Dokumen PDF</button>
+<button class="active" data-tab="map">Map</button><button data-tab="directory">17 SDG Directory</button><button data-tab="pdfs">SDG PDF Documents</button><button data-tab="progress">Implementation Tracker</button>
 </div></nav>
 <main>
 <section id="map" class="panel active">
- <div class="headrow"><div><h2>Peta lokasi festival</h2><p class="lead">Paparan lalai ialah Full Map. Pilih tab untuk melihat kawasan lebih terperinci atau peta satelit.</p></div><span class="badge">Full Map · Paparan lalai</span></div>
+ <div class="headrow"><div><h2>Map festival</h2><p class="lead">Paparan lalai ialah Full Map. Pilih tab untuk melihat kawasan lebih terperinci atau peta satelit.</p></div><span class="badge">Full Map · Paparan lalai</span></div>
  <div class="maptabs" id="mapTabs">
   <button class="tabbtn active" data-map="full">Full Map</button>
   <button class="tabbtn" data-map="campus">Campus Overview</button>
@@ -95,12 +95,12 @@ footer{background:#102f43;color:#d6e5e8;text-align:center;padding:22px;font-size
   <p style="margin:8px 0 0"><a href="https://www.google.com/maps/search/?api=1&query=UMPSA%20Kampus%20Gambang" target="_blank" rel="noopener">Buka Google Maps penuh ↗</a></p>
   <div class="note">Google Maps satelit digunakan sebagai rujukan geografi. Full Map dan peta zon kekal sebagai paparan ilustrasi program. GPS belum diselaraskan dengan imej ilustrasi.</div>
  </div>
- <div class="headrow" style="margin-top:26px"><div><h2>Terus ke SDG</h2><p class="lead">Pilih mana-mana matlamat untuk melihat kawasan dan membuka PDF.</p></div><button class="btn" onclick="go('directory')">Buka direktori 17 SDG</button></div>
+ <div class="headrow" style="margin-top:26px"><div><h2>Terus ke SDG</h2><p class="lead">Select any goal to view its location and PDF guide.</p></div><button class="btn" onclick="go('directory')">Open 17 SDG Directory</button></div>
  <div class="grid" id="quickGrid"></div>
  <div class="card" style="margin-top:14px;border:2px solid #0b777b">
   <span class="badge">Pin interaktif SDG 04</span>
   <h3 style="margin:9px 0 4px">SDG 04 · Quality Education</h3>
-  <p class="lead">Rear Courtyard Between Buildings — penanda SDG 04 pada peta Court Frontage, halaman 3 PDF asal.</p>
+  <p class="lead">Rear Courtyard Between Buildings — SDG 04 marker on the Court Frontage map, page 3 of the source PDF.</p>
   <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
    <button class="btn" onclick="go('map');setMap('court');">Lihat pin SDG 04 pada peta ilustrasi</button>
    <a class="btn" href="https://www.google.com/maps/search/?api=1&query=UMPSA%20Kampus%20Gambang%20Rear%20Courtyard" target="_blank" rel="noopener">Cari lokasi di Google Maps ↗</a>
@@ -109,15 +109,24 @@ footer{background:#102f43;color:#d6e5e8;text-align:center;padding:22px;font-size
  </div>
 </section>
 <section id="directory" class="panel">
- <div class="headrow"><div><h2>Direktori 17 SDG</h2><p class="lead">Lokasi mengikut label dan keterangan dalam PDF peta program.</p></div><input id="search" placeholder="Cari nombor, SDG atau lokasi…"></div>
+ <div class="headrow"><div><h2>17 SDG Directory</h2><p class="lead">SDG names and location labels follow the English terminology used on the festival maps.</p></div><input id="search" placeholder="Search SDG number, name or location…"></div>
  <div class="grid" id="sdgGrid"></div>
 </section>
 <section id="pdfs" class="panel">
- <div class="headrow"><div><h2>Dokumen panduan SDG</h2><p class="lead">17 fail PDF berasingan untuk rujukan guru.</p></div></div>
+ <div class="headrow"><div><h2>SDG PDF Documents</h2><p class="lead">Open the individual PDF guide for each Sustainable Development Goal.</p></div></div>
  <div class="grid" id="pdfGrid"></div>
 </section>
+<section id="progress" class="panel">
+ <div class="headrow"><div><h2>Implementation Tracker</h2><p class="lead">Tick each SDG after the activity or task has been completed.</p></div></div>
+ <div class="card" style="margin-bottom:14px">
+  <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap"><div><strong id="progressCount">0 of 17 completed</strong><p class="lead" id="progressMessage">Your implementation record will appear here.</p></div><button class="gps-btn secondary" id="resetProgress">Reset all ticks</button></div>
+  <div style="height:12px;background:#e7edef;border-radius:20px;overflow:hidden;margin-top:12px"><div id="progressBar" style="height:100%;width:0;background:#087e83;border-radius:20px;transition:width .2s"></div></div>
+ </div>
+ <div class="grid" id="progressGrid"></div>
+ <p class="note">Record storage: ticks are saved in this browser on this device. They are not automatically shared or synchronised with other teachers or devices.</p>
+</section>
 </main>
-<footer>SCOUT SDG · Pahang International Scouts for SDGs Festival 2026<br>Rujukan lokasi: PETA SCOUT SDG.pdf, halaman 1–5. Imej satelit digunakan sebagai orientasi visual.</footer>
+<footer>SCOUT SDG · Pahang International Scouts for SDGs Festival 2026<br>Reference: PETA SCOUT SDG.pdf, pages 1–5. Satellite imagery is provided for visual orientation.</footer>
 <script>
 const SDGS = [{"n": 1, "en": "No Poverty", "ms": "Tiada Kemiskinan", "area": "Campus Overview", "location": "Central Front Forecourt", "pages": "20–23", "desc": "Menghapuskan kemiskinan dalam semua bentuk dan di semua tempat.", "pdf": "pdf/SDG01.pdf"}, {"n": 2, "en": "Zero Hunger", "ms": "Sifar Kelaparan", "area": "The East · Tasik Paya Besar", "location": "Far-Side Land Parcel", "pages": "24–27", "desc": "Membasmi kelaparan, meningkatkan keselamatan makanan dan pemakanan serta menggalakkan pertanian mampan.", "pdf": "pdf/SDG02.pdf"}, {"n": 3, "en": "Good Health and Well-being", "ms": "Kesihatan Baik dan Kesejahteraan", "area": "Campus Overview", "location": "Far-Right Building Beside Field", "pages": "28–31", "desc": "Memastikan kehidupan yang sihat dan menggalakkan kesejahteraan untuk semua pada setiap peringkat umur.", "pdf": "pdf/SDG03.pdf"}, {"n": 4, "en": "Quality Education", "ms": "Pendidikan Berkualiti", "area": "Campus Overview / Court Frontage", "location": "Rear Courtyard Between Buildings", "pages": "32–36", "desc": "Memastikan pendidikan berkualiti, inklusif dan saksama serta peluang pembelajaran sepanjang hayat.", "pdf": "pdf/SDG04.pdf"}, {"n": 5, "en": "Gender Equality", "ms": "Kesaksamaan Gender", "area": "Campus Overview", "location": "Upper-Left Front Forecourt", "pages": "37–41", "desc": "Mencapai kesaksamaan gender serta memperkasa semua wanita dan kanak-kanak perempuan.", "pdf": "pdf/SDG05.pdf"}, {"n": 6, "en": "Clean Water and Sanitation", "ms": "Air Bersih dan Sanitasi", "area": "The East · Tasik Paya Besar", "location": "Beside SDG 12 and SDG 04", "pages": "42–45", "desc": "Memastikan ketersediaan serta pengurusan air bersih dan sanitasi yang mampan untuk semua.", "pdf": "pdf/SDG06.pdf"}, {"n": 7, "en": "Affordable and Clean Energy", "ms": "Tenaga Bersih dan Berpatutan", "area": "Campus Overview", "location": "Field Area", "pages": "46–48", "desc": "Memastikan akses kepada tenaga yang berpatutan, boleh dipercayai, mampan dan moden untuk semua.", "pdf": "pdf/SDG07.pdf"}, {"n": 8, "en": "Decent Work and Economic Growth", "ms": "Pekerjaan Layak dan Pertumbuhan Ekonomi", "area": "Court Frontage", "location": "Behind Main Stage – Left", "pages": "49–53", "desc": "Menggalakkan pertumbuhan ekonomi yang mampan dan pekerjaan yang produktif serta layak.", "pdf": "pdf/SDG08.pdf"}, {"n": 9, "en": "Industry, Innovation and Infrastructure", "ms": "Industri, Inovasi dan Infrastruktur", "area": "Paya Besar Industrial Park", "location": "Industrial Cluster / Warehouse Parcel", "pages": "54–56", "desc": "Membina infrastruktur berdaya tahan, menggalakkan perindustrian inklusif dan memupuk inovasi.", "pdf": "pdf/SDG09.pdf"}, {"n": 10, "en": "Reduced Inequalities", "ms": "Mengurangkan Ketidaksamaan", "area": "Courtyard", "location": "Behind Main Stage – Right", "pages": "57–59", "desc": "Mengurangkan ketidaksamaan dalam dan antara negara serta memastikan peluang yang adil untuk semua.", "pdf": "pdf/SDG10.pdf"}, {"n": 11, "en": "Sustainable Cities and Communities", "ms": "Bandar dan Komuniti Mampan", "area": "Court Frontage", "location": "Rear Court Below SDG 12", "pages": "60–63", "desc": "Menjadikan bandar dan penempatan manusia inklusif, selamat, berdaya tahan dan mampan.", "pdf": "pdf/SDG11.pdf"}, {"n": 12, "en": "Responsible Consumption and Production", "ms": "Penggunaan dan Pengeluaran Bertanggungjawab", "area": "Courtyard", "location": "Upper Rear Court", "pages": "64–68", "desc": "Memastikan corak penggunaan dan pengeluaran yang mampan.", "pdf": "pdf/SDG12.pdf"}, {"n": 13, "en": "Climate Action", "ms": "Tindakan terhadap Perubahan Iklim", "area": "Paya Besar Industrial Park", "location": "Upper Frontage Strip", "pages": "69–71", "desc": "Mengambil tindakan segera untuk menangani perubahan iklim dan kesannya.", "pdf": "pdf/SDG13.pdf"}, {"n": 14, "en": "Life Below Water", "ms": "Hidupan di Bawah Air", "area": "The East · Tasik Paya Besar", "location": "Lake", "pages": "72–74", "desc": "Memulihara dan menggunakan lautan, laut dan sumber marin secara mampan.", "pdf": "pdf/SDG14.pdf"}, {"n": 15, "en": "Life on Land", "ms": "Hidupan di Darat", "area": "Campus Overview", "location": "Field-Side Strip Beside Main Stage", "pages": "75–78", "desc": "Melindungi, memulihara dan memulihkan ekosistem daratan serta menghentikan kehilangan biodiversiti.", "pdf": "pdf/SDG15.pdf"}, {"n": 16, "en": "Peace, Justice and Strong Institutions", "ms": "Keamanan, Keadilan dan Institusi Kukuh", "area": "Campus Overview / Court Frontage", "location": "Lane Between the Two Red-Roof Buildings", "pages": "79–89", "desc": "Menggalakkan masyarakat aman dan inklusif, akses kepada keadilan serta institusi yang berkesan.", "pdf": "pdf/SDG16.pdf"}, {"n": 17, "en": "Partnerships for the Goals", "ms": "Kerjasama demi Matlamat", "area": "Campus Overview / The East", "location": "Left Front Forecourt; SDG Action Zone 17 (Chapter The East)", "pages": "90–93", "desc": "Mengukuhkan kerjasama dan perkongsian untuk mencapai semua matlamat pembangunan mampan.", "pdf": "pdf/SDG17.pdf"}];
 const OVERVIEW = [{"n": 4, "x": 34.5, "y": 32.5}, {"n": 16, "x": 29.5, "y": 43.5}, {"n": 5, "x": 13.0, "y": 54.0}, {"n": 17, "x": 10.0, "y": 65.0}, {"n": 1, "x": 25.5, "y": 72.0}, {"n": 7, "x": 79.0, "y": 30.0}, {"n": 15, "x": 67.0, "y": 46.0}, {"n": 3, "x": 82.0, "y": 56.0}];
@@ -130,7 +139,7 @@ function renderPins(kind){
  const frame=$('#illustratedFrame');frame.querySelectorAll('.pin').forEach(x=>x.remove());
  let arr=kind==='campus'?OVERVIEW:(DETAIL[kind]||[]);
  arr.forEach(p=>{const b=document.createElement('button');b.className='pin';b.style.left=p.x+'%';b.style.top=p.y+'%';b.textContent=String(p.n).padStart(2,'0');b.title='Buka SDG '+p.n;b.setAttribute('aria-label','Buka SDG '+p.n);b.onclick=()=>showSdg(p.n);frame.appendChild(b);});
- $('#mapLegend').innerHTML=arr.map(p=>`<button class="chip" onclick="showSdg(${p.n})">SDG ${String(p.n).padStart(2,'0')} · ${SDGS.find(s=>s.n===p.n).ms}</button>`).join('');
+ $('#mapLegend').innerHTML=arr.map(p=>`<button class="chip" onclick="showSdg(${p.n})">SDG ${String(p.n).padStart(2,'0')} · ${SDGS.find(s=>s.n===p.n).en}</button>`).join('');
 }
 const mapFiles={full:1,campus:2,court:3,courtyard:3,east:4,industrial:5};
 const mapDescriptions={full:'Full Map memaparkan keseluruhan kawasan program seperti dalam halaman 1 PDF asal.',campus:'Campus Overview menunjukkan susun atur tapak utama UMPSA dan penanda SDG.',court:'Court Frontage menunjukkan lokasi SDG di kawasan hadapan gelanggang.',courtyard:'Courtyard menunjukkan lokasi SDG di kawasan courtyard.',east:'The East menunjukkan kawasan Tasik Paya Besar dan SDG Action Zone 17.',industrial:'Industrial Park menunjukkan lokasi SDG di kawasan Paya Besar Industrial Park.'};
@@ -140,15 +149,24 @@ function setMap(kind){
  $('#satelliteView').hidden=true;$('#illustratedView').hidden=false;
  $('#illustratedImage').src=`assets/maps/source_page_${mapFiles[kind]}.jpg`;
  $('#illustratedImage').alt='Peta ilustrasi '+kind;
- $('#mapNote').textContent=mapDescriptions[kind]+' Penanda GPS belum diselaraskan; kedudukan sebenar memerlukan proses kalibrasi.';
+ $('#mapNote').textContent=mapDescriptions[kind]+' GPS uses separate calibration for each zone. Add at least 3 reference points if this zone has not yet been calibrated.';
  renderPins(kind);
 }
 document.querySelectorAll('[data-map]').forEach(b=>b.addEventListener('click',()=>setMap(b.dataset.map)));
-function sdgCard(s){return `<article class="card sdgcard" data-sdg="${s.n}"><div class="num">${String(s.n).padStart(2,'0')}</div><div><h3>SDG ${s.n} · ${s.ms}</h3><p><b>${s.en}</b></p><p>${s.desc}</p><p><span class="badge">${s.area}</span></p><p><b>Lokasi:</b> ${s.location}</p><p>PDF asal: halaman ${s.pages}</p><a href="${s.pdf}" target="_blank" rel="noopener">Buka PDF SDG ${String(s.n).padStart(2,'0')} →</a></div></article>`;}
-function renderDirectory(){const q=$('#search').value.toLowerCase();$('#sdgGrid').innerHTML=SDGS.filter(s=>(`sdg ${s.n} ${s.ms} ${s.en} ${s.area} ${s.location}`).toLowerCase().includes(q)).map(sdgCard).join('');}
-$('#search').addEventListener('input',renderDirectory);renderDirectory();
-$('#quickGrid').innerHTML=SDGS.map(s=>`<article class="card"><span class="badge">SDG ${String(s.n).padStart(2,'0')}</span><h3>${s.ms}</h3><p class="lead">${s.area}</p><a href="#" onclick="showSdg(${s.n});return false">Lihat lokasi & PDF →</a></article>`).join('');
-$('#pdfGrid').innerHTML=SDGS.map(s=>`<article class="card"><span class="badge">SDG ${String(s.n).padStart(2,'0')}</span><h3>${s.ms}</h3><p class="lead">Halaman ${s.pages}</p><a class="btn" href="${s.pdf}" target="_blank" rel="noopener">Buka PDF</a></article>`).join('');
+const progressKey='scout_sdg_completed_v1';
+let completed={};try{completed=JSON.parse(localStorage.getItem(progressKey)||'{}')}catch(e){completed={}}
+function saveProgress(){localStorage.setItem(progressKey,JSON.stringify(completed));renderProgress();}
+function toggleCompleted(n,checked){completed[n]=!!checked;saveProgress();renderDirectory();}
+function sdgCard(s){const done=!!completed[s.n];return `<article class="card sdgcard" data-sdg="${s.n}"><div class="num">${String(s.n).padStart(2,'0')}</div><div style="min-width:0;flex:1"><h3>SDG ${String(s.n).padStart(2,'0')} · ${s.en}</h3><p>${s.desc}</p><p><span class="badge">${s.area}</span></p><p><b>Location:</b> ${s.location}</p><p>PDF source pages: ${s.pages}</p><p><a href="${s.pdf}" target="_blank" rel="noopener">Open SDG ${String(s.n).padStart(2,'0')} PDF →</a></p><label style="display:flex;align-items:center;gap:9px;margin-top:9px;font-weight:750"><input type="checkbox" class="sdg-complete" data-sdg-check="${s.n}" ${done?'checked':''} style="width:20px;height:20px;accent-color:#087e83"> ${done?'Completed':'Mark as completed'}</label></div></article>`;}
+function renderDirectory(){const q=$('#search').value.toLowerCase();$('#sdgGrid').innerHTML=SDGS.filter(s=>(`sdg ${s.n} ${s.en} ${s.area} ${s.location}`).toLowerCase().includes(q)).map(sdgCard).join('');}
+$('#search').addEventListener('input',renderDirectory);
+$('#sdgGrid').addEventListener('change',e=>{if(e.target.matches('[data-sdg-check]'))toggleCompleted(Number(e.target.dataset.sdgCheck),e.target.checked)});
+function renderProgress(){const done=SDGS.filter(s=>completed[s.n]).length;$('#progressCount').textContent=`${done} of 17 completed`;$('#progressMessage').textContent=done===17?'All SDGs have been marked as completed.':`${17-done} SDG(s) remaining.`;$('#progressBar').style.width=(done/17*100)+'%';$('#progressGrid').innerHTML=SDGS.map(s=>`<article class="card" style="display:flex;align-items:center;gap:12px"><div class="num">${String(s.n).padStart(2,'0')}</div><div style="flex:1;min-width:0"><strong>SDG ${String(s.n).padStart(2,'0')} · ${s.en}</strong><p class="lead">${s.area}</p><span class="badge">${completed[s.n]?'Completed':'Not completed'}</span></div><input aria-label="Mark SDG ${s.n} completed" type="checkbox" data-progress-check="${s.n}" ${completed[s.n]?'checked':''} style="width:22px;height:22px;accent-color:#087e83"></article>`).join('');}
+$('#progressGrid').addEventListener('change',e=>{if(e.target.matches('[data-progress-check]')){completed[Number(e.target.dataset.progressCheck)]=e.target.checked;localStorage.setItem(progressKey,JSON.stringify(completed));renderProgress();renderDirectory();}});
+$('#resetProgress').addEventListener('click',()=>{if(confirm('Reset all 17 SDG completion ticks?')){completed={};localStorage.removeItem(progressKey);renderProgress();renderDirectory();}});
+renderDirectory();renderProgress();
+$('#quickGrid').innerHTML=SDGS.map(s=>`<article class="card"><span class="badge">SDG ${String(s.n).padStart(2,'0')}</span><h3>${s.en}</h3><p class="lead">${s.area}</p><a href="#" onclick="showSdg(${s.n});return false">View location & PDF →</a></article>`).join('');
+$('#pdfGrid').innerHTML=SDGS.map(s=>`<article class="card"><span class="badge">SDG ${String(s.n).padStart(2,'0')}</span><h3>${s.en}</h3><p class="lead">Pages ${s.pages}</p><a class="btn" href="${s.pdf}" target="_blank" rel="noopener">Open PDF</a></article>`).join('');
 // GPS zon: setiap imej mempunyai transformasi affine tersendiri.
 const presetAnchors={
  full:[
