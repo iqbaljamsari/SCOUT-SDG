@@ -3,6 +3,14 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#12354a">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SCOUT SDG 2026">
+<meta name="mobile-web-app-capable" content="yes">
+
 <title>SCOUT SDG · Panduan Guru</title>
 <style>
 :root{--navy:#12354a;--teal:#087e83;--gold:#f0b84b;--paper:#f4f7f8;--ink:#19313e;--muted:#637782;--line:#dce5e8}
@@ -211,4 +219,14 @@ function setMap(kind){
 if(!calibrations.full){calibrations.full=[];saveCalibrations();}
 $('#anchorName').addEventListener('focus',()=>{if(activeZone()==='full'&&!$('#anchorName').value){const next=presetAnchors.full[getAnchors().length];if(next){$('#anchorName').value=next.name;$('#anchorLat').value=next.lat;$('#anchorLon').value=next.lon}}});
 setMap('full');
-</script></body></html>
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./service-worker.js')
+      .catch(err => console.warn('SCOUT SDG offline support unavailable:', err));
+  });
+}
+</script>
+
+</body></html>
