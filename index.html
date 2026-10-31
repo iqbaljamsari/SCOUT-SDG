@@ -35,6 +35,19 @@ a{color:#08777e;text-decoration:none;font-weight:800}a:hover{text-decoration:und
 .zone-layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(260px,.8fr);gap:15px}
 select,input{font:inherit;border:1px solid var(--line);border-radius:9px;background:white;padding:10px 12px;color:var(--ink)}
 footer{background:#102f43;color:#d6e5e8;text-align:center;padding:22px;font-size:12px}
+
+.gps-tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-top:12px}
+.gps-panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px}
+.gps-panel h3{margin:0 0 7px;font-size:15px}.gps-panel p{font-size:12px;color:var(--muted);margin:4px 0}
+.gps-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}.gps-row input,.gps-row select{min-width:0;flex:1;width:100%}
+.gps-btn{border:0;border-radius:9px;padding:10px 12px;background:#12354a;color:white;font-weight:800;cursor:pointer}
+.gps-btn.secondary{background:#e5f1f1;color:#075e63}.gps-status{font-size:13px;font-weight:700;margin-top:7px;color:#49616d}
+.gps-marker{position:absolute;left:50%;top:50%;width:23px;height:23px;border-radius:50%;background:#ef4444;border:4px solid white;box-shadow:0 0 0 5px #ef444455,0 2px 9px #0008;transform:translate(-50%,-50%);z-index:5;pointer-events:none;display:none}
+.gps-marker:after{content:'';position:absolute;inset:-10px;border:2px solid #ef4444;border-radius:50%;animation:gpspulse 2s infinite}
+@keyframes gpspulse{0%{transform:scale(.55);opacity:.8}100%{transform:scale(1.5);opacity:0}}
+.mapframe.calibrating{outline:3px dashed #e5a52f;outline-offset:3px;cursor:crosshair}
+@media(max-width:600px){.gps-tools{grid-template-columns:1fr}}
+
 @media(max-width:760px){.zone-layout{grid-template-columns:1fr}.pin{width:30px;height:30px;font-size:11px}.mapframe.satellite img{max-height:none}}
 </style></head>
 <body>
@@ -58,6 +71,24 @@ footer{background:#102f43;color:#d6e5e8;text-align:center;padding:22px;font-size
   <div class="mapframe" id="illustratedFrame"><img id="illustratedImage" src="assets/maps/source_page_1.jpg" alt="Peta keseluruhan festival SCOUT SDG"></div>
   <div class="legend" id="mapLegend"></div>
   <div class="note" id="mapNote">Full Map memaparkan keseluruhan kawasan program seperti dalam halaman 1 PDF asal. Pilih tab lain untuk melihat peta terperinci. Penanda GPS belum diaktifkan; penyelarasan memerlukan titik kalibrasi sebenar bagi setiap peta.</div>
+ </div>
+ <div class="gps-tools" id="gpsTools">
+  <div class="gps-panel">
+   <h3>📍 Kedudukan GPS</h3>
+   <p>Benarkan akses lokasi pada pelayar. Pilih zon peta dahulu untuk melihat penanda pada imej zon tersebut.</p>
+   <div class="gps-row"><button class="gps-btn" id="startGps">Aktifkan GPS</button><button class="gps-btn secondary" id="stopGps">Hentikan</button></div>
+   <div class="gps-status" id="gpsStatus" aria-live="polite">GPS belum diaktifkan.</div>
+   <p id="gpsCoords">Koordinat: —</p>
+  </div>
+  <div class="gps-panel">
+   <h3>🧭 Kalibrasi peta zon</h3>
+   <p>Untuk setiap peta, pilih sekurang-kurangnya 3 titik yang diketahui. Kemudian tekan lokasi titik itu pada imej peta.</p>
+   <div class="gps-row"><input id="anchorName" placeholder="Nama titik rujukan (cth. Pintu utama)"></div>
+   <div class="gps-row"><input id="anchorLat" inputmode="decimal" placeholder="Latitud" aria-label="Latitud"><input id="anchorLon" inputmode="decimal" placeholder="Longitud" aria-label="Longitud"></div>
+   <div class="gps-row"><button class="gps-btn secondary" id="captureAnchor">Pilih lokasi pada peta</button><button class="gps-btn" id="saveAnchor" disabled>Simpan titik</button></div>
+   <div class="gps-status" id="calStatus">Belum ada titik kalibrasi untuk zon ini.</div>
+   <div class="gps-row"><button class="gps-btn secondary" id="clearAnchors">Padam kalibrasi zon ini</button></div>
+  </div>
  </div>
  <div id="satelliteView" hidden>
   <div class="mapframe satellite"><iframe title="Google Maps satelit – UMPSA Kampus Gambang" src="https://maps.google.com/maps?q=UMPSA%20Kampus%20Gambang&t=k&z=17&output=embed" width="100%" height="480" style="border:0;display:block" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>
@@ -118,5 +149,48 @@ function renderDirectory(){const q=$('#search').value.toLowerCase();$('#sdgGrid'
 $('#search').addEventListener('input',renderDirectory);renderDirectory();
 $('#quickGrid').innerHTML=SDGS.map(s=>`<article class="card"><span class="badge">SDG ${String(s.n).padStart(2,'0')}</span><h3>${s.ms}</h3><p class="lead">${s.area}</p><a href="#" onclick="showSdg(${s.n});return false">Lihat lokasi & PDF →</a></article>`).join('');
 $('#pdfGrid').innerHTML=SDGS.map(s=>`<article class="card"><span class="badge">SDG ${String(s.n).padStart(2,'0')}</span><h3>${s.ms}</h3><p class="lead">Halaman ${s.pages}</p><a class="btn" href="${s.pdf}" target="_blank" rel="noopener">Buka PDF</a></article>`).join('');
+// GPS zon: setiap imej mempunyai transformasi affine tersendiri.
+const presetAnchors={
+ full:[
+  {name:'A — Petron Gambang Perdana',lat:3.7120169,lon:103.1193847},
+  {name:'B — UMPSA Kampus Paya Besar',lat:3.7208958,lon:103.1204931},
+  {name:'C — Tasik Paya Besar',lat:3.7097298,lon:103.1213859},
+  {name:'D — Pusat Khidmat Masyarakat DUN Lepar',lat:3.7116850,lon:103.1227887}
+ ]
+};
+const calibrationKey='scout_sdg_zone_calibration_v1';
+let calibrations={};try{calibrations=JSON.parse(localStorage.getItem(calibrationKey)||'{}')}catch(e){calibrations={}}
+let pendingPixel=null,watchId=null,lastPosition=null;
+const zoneNames={full:'Full Map',campus:'Campus Overview',court:'Court Frontage',courtyard:'Courtyard',east:'The East',industrial:'Industrial Park'};
+function activeZone(){return document.querySelector('[data-map].active')?.dataset.map||'full'}
+function saveCalibrations(){localStorage.setItem(calibrationKey,JSON.stringify(calibrations));updateCalibrationStatus();}
+function getAnchors(){return calibrations[activeZone()]||[];}
+function updateCalibrationStatus(){const a=getAnchors();const el=$('#calStatus');if(!el)return;el.textContent=`${zoneNames[activeZone()]||activeZone()}: ${a.length} titik disimpan. ${a.length>=3?'Kalibrasi boleh digunakan.':'Perlu sekurang-kurangnya '+(3-a.length)+' titik lagi.'}`;}
+function addGpsMarker(){const frame=$('#illustratedFrame');let marker=frame.querySelector('.gps-marker');if(!marker){marker=document.createElement('div');marker.className='gps-marker';frame.appendChild(marker)}return marker;}
+function solve3(A,b){const m=A.map((r,i)=>[...r,b[i]]);for(let i=0;i<3;i++){let p=i;for(let r=i+1;r<3;r++)if(Math.abs(m[r][i])>Math.abs(m[p][i]))p=r;if(Math.abs(m[p][i])<1e-12)throw Error('Titik kalibrasi terlalu hampir atau sebaris.');[m[i],m[p]]=[m[p],m[i]];let d=m[i][i];for(let c=i;c<4;c++)m[i][c]/=d;for(let r=0;r<3;r++)if(r!==i){let f=m[r][i];for(let c=i;c<4;c++)m[r][c]-=f*m[i][c]}}return m.map(r=>r[3]);}
+function affineFit(points,target){const sums=Array.from({length:3},()=>Array(3).fill(0));const rhs=Array(3).fill(0);for(const p of points){const v=[p.lat,p.lon,1];for(let i=0;i<3;i++){rhs[i]+=v[i]*target(p);for(let j=0;j<3;j++)sums[i][j]+=v[i]*v[j]}}return solve3(sums,rhs);}
+function projectPosition(pos){const a=getAnchors();if(a.length<3)return null;try{const cx=affineFit(a,p=>p.x),cy=affineFit(a,p=>p.y);const v=[pos.coords.latitude,pos.coords.longitude,1];const x=v.reduce((s,n,i)=>s+n*cx[i],0),y=v.reduce((s,n,i)=>s+n*cy[i],0);if(!Number.isFinite(x)||!Number.isFinite(y))return null;return{x,y}}catch(e){$('#gpsStatus').textContent=e.message;return null}}
+function renderGpsOnCurrentMap(){const marker=addGpsMarker();if(!lastPosition){marker.style.display='none';return}const pt=projectPosition(lastPosition);if(!pt||pt.x<0||pt.x>100||pt.y<0||pt.y>100){marker.style.display='none';if(getAnchors().length>=3)$('#gpsStatus').textContent='GPS diterima, tetapi kedudukan berada di luar imej zon atau kalibrasi perlu disemak.';return}marker.style.left=pt.x+'%';marker.style.top=pt.y+'%';marker.style.display='block';}
+function startGps(){if(!navigator.geolocation){$('#gpsStatus').textContent='Pelayar ini tidak menyokong GPS.';return}$('#gpsStatus').textContent='Mendapatkan lokasi…';watchId=navigator.geolocation.watchPosition(pos=>{lastPosition=pos;const c=pos.coords;$('#gpsCoords').textContent=`Koordinat: ${c.latitude.toFixed(7)}, ${c.longitude.toFixed(7)} · ±${Math.round(c.accuracy)} m`;$('#gpsStatus').textContent='GPS aktif. Ketepatan bacaan bergantung pada peranti dan keadaan lokasi.';renderGpsOnCurrentMap()},err=>{$('#gpsStatus').textContent=({1:'Akses lokasi ditolak. Benarkan Location dalam tetapan pelayar.',2:'Lokasi tidak dapat dikenal pasti.',3:'Masa mendapatkan lokasi tamat.'})[err.code]||err.message},{enableHighAccuracy:true,maximumAge:2000,timeout:15000});}
+function stopGps(){if(watchId!==null){navigator.geolocation.clearWatch(watchId);watchId=null}$('#gpsStatus').textContent='GPS dihentikan.';}
+$('#startGps').addEventListener('click',startGps);$('#stopGps').addEventListener('click',stopGps);
+$('#captureAnchor').addEventListener('click',()=>{if(activeZone()==='satellite')return;$('#illustratedFrame').classList.add('calibrating');$('#calStatus').textContent='Tekan titik yang sepadan pada imej peta.';pendingPixel=null;$('#saveAnchor').disabled=true;});
+$('#illustratedImage').addEventListener('click',ev=>{if(!$('#illustratedFrame').classList.contains('calibrating'))return;const r=ev.currentTarget.getBoundingClientRect();pendingPixel={x:(ev.clientX-r.left)/r.width*100,y:(ev.clientY-r.top)/r.height*100};$('#saveAnchor').disabled=false;$('#calStatus').textContent=`Lokasi imej dipilih: ${pendingPixel.x.toFixed(1)}%, ${pendingPixel.y.toFixed(1)}%. Isi nama, latitud dan longitud kemudian simpan.`;});
+$('#saveAnchor').addEventListener('click',()=>{if(!pendingPixel)return;const name=$('#anchorName').value.trim(),lat=Number($('#anchorLat').value),lon=Number($('#anchorLon').value);if(!name||!Number.isFinite(lat)||!Number.isFinite(lon)||Math.abs(lat)>90||Math.abs(lon)>180){$('#calStatus').textContent='Isi nama titik serta koordinat latitud dan longitud yang sah.';return}const zone=activeZone();calibrations[zone]=calibrations[zone]||[];calibrations[zone].push({name,lat,lon,x:pendingPixel.x,y:pendingPixel.y});saveCalibrations();pendingPixel=null;$('#saveAnchor').disabled=true;$('#illustratedFrame').classList.remove('calibrating');$('#anchorName').value='';$('#anchorLat').value='';$('#anchorLon').value='';renderGpsOnCurrentMap();});
+$('#clearAnchors').addEventListener('click',()=>{if(!confirm('Padam semua titik kalibrasi untuk '+(zoneNames[activeZone()]||activeZone())+' pada peranti ini?'))return;delete calibrations[activeZone()];saveCalibrations();renderGpsOnCurrentMap();});
+function setMap(kind){
+ document.querySelectorAll('[data-map]').forEach(b=>b.classList.toggle('active',b.dataset.map===kind));
+ if(kind==='satellite'){$('#illustratedView').hidden=true;$('#satelliteView').hidden=false;return;}
+ $('#satelliteView').hidden=true;$('#illustratedView').hidden=false;
+ $('#illustratedImage').src=`assets/maps/source_page_${mapFiles[kind]}.jpg`;
+ $('#illustratedImage').alt='Peta ilustrasi '+kind;
+ $('#mapNote').textContent=mapDescriptions[kind]+' GPS menggunakan kalibrasi berasingan bagi zon ini. Jika belum dikalibrasi, tambah sekurang-kurangnya 3 titik rujukan.';
+ renderPins(kind);$('#illustratedFrame').classList.remove('calibrating');pendingPixel=null;$('#saveAnchor').disabled=true;updateCalibrationStatus();
+ if(lastPosition)renderGpsOnCurrentMap();
+}
+// Paparan Full Map bermula dengan empat koordinat rujukan sedia untuk dipadankan pada imej.
+// Kedudukan piksel perlu dipilih sendiri supaya titik geografi benar-benar sepadan.
+if(!calibrations.full){calibrations.full=[];saveCalibrations();}
+$('#anchorName').addEventListener('focus',()=>{if(activeZone()==='full'&&!$('#anchorName').value){const next=presetAnchors.full[getAnchors().length];if(next){$('#anchorName').value=next.name;$('#anchorLat').value=next.lat;$('#anchorLon').value=next.lon}}});
 setMap('full');
 </script></body></html>
