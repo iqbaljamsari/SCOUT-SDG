@@ -44,29 +44,25 @@ footer{background:#102f43;color:#d6e5e8;text-align:center;padding:22px;font-size
 </div></nav>
 <main>
 <section id="map" class="panel active">
- <div class="headrow"><div><h2>Peta lokasi festival</h2><p class="lead">Tukar antara peta satelit dan peta ilustrasi asal. Pilih pin pada peta ilustrasi atau cari SDG melalui direktori.</p></div><span class="badge">Dua paparan peta</span></div>
- <div class="switches"><button class="tabbtn active" id="satBtn">Peta satelit</button><button class="tabbtn" id="illBtn">Peta ilustrasi asal</button></div>
- <div id="satView">
-  <div class="mapframe satellite">
-   <iframe title="Google Maps satelit – UMPSA Kampus Gambang"
-     src="https://maps.google.com/maps?q=UMPSA%20Kampus%20Gambang&t=k&z=17&output=embed"
-     width="100%" height="480" style="border:0;display:block" loading="lazy"
-     referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
-  </div>
-  <p style="margin:8px 0 0"><a href="https://www.google.com/maps/search/?api=1&query=UMPSA%20Kampus%20Gambang" target="_blank" rel="noopener">Buka Google Maps penuh ↗</a></p>
-  <div class="note"><b>Nota ketepatan:</b> Imej satelit ini ialah tangkapan kawasan kampus UMPSA yang dibekalkan sebelum ini. Ia digunakan untuk orientasi visual. Dokumen peta program menunjukkan The East / Tasik Paya Besar dan Paya Besar Industrial Park sebagai kawasan berasingan di luar bingkai imej ini. Oleh itu, tiada pin SDG direka atau diletakkan pada imej satelit. Gunakan peta ilustrasi asal untuk pin lokasi program.</div>
+ <div class="headrow"><div><h2>Peta lokasi festival</h2><p class="lead">Paparan lalai ialah Full Map. Pilih tab untuk melihat kawasan lebih terperinci atau peta satelit.</p></div><span class="badge">Full Map · Paparan lalai</span></div>
+ <div class="maptabs" id="mapTabs">
+  <button class="tabbtn active" data-map="full">Full Map</button>
+  <button class="tabbtn" data-map="campus">Campus Overview</button>
+  <button class="tabbtn" data-map="court">Court Frontage</button>
+  <button class="tabbtn" data-map="courtyard">Courtyard</button>
+  <button class="tabbtn" data-map="east">The East · Tasik Paya Besar</button>
+  <button class="tabbtn" data-map="industrial">Industrial Park</button>
+  <button class="tabbtn" data-map="satellite">Google Maps Satelit</button>
  </div>
- <div id="illView" hidden>
-  <div class="maptabs">
-   <button class="tabbtn active" data-map="campus">Campus Overview</button>
-   <button class="tabbtn" data-map="court">Court Frontage</button>
-   <button class="tabbtn" data-map="courtyard">Courtyard</button>
-   <button class="tabbtn" data-map="east">The East · Tasik Paya Besar</button>
-   <button class="tabbtn" data-map="industrial">Paya Besar Industrial Park</button>
-  </div>
-  <div class="mapframe" id="illustratedFrame"><img id="illustratedImage" src="assets/maps/source_page_2.jpg" alt="Peta ilustrasi Campus Overview"></div>
+ <div id="illustratedView">
+  <div class="mapframe" id="illustratedFrame"><img id="illustratedImage" src="assets/maps/source_page_1.jpg" alt="Peta keseluruhan festival SCOUT SDG"></div>
   <div class="legend" id="mapLegend"></div>
-  <div class="note">Pin bernombor ialah kawasan klik yang diletakkan pada penanda SDG yang tercetak dalam peta asal. Kedudukan pin ini mengikuti ilustrasi program, bukan koordinat GPS.</div>
+  <div class="note" id="mapNote">Full Map memaparkan keseluruhan kawasan program seperti dalam halaman 1 PDF asal. Pilih tab lain untuk melihat peta terperinci. Penanda GPS belum diaktifkan; penyelarasan memerlukan titik kalibrasi sebenar bagi setiap peta.</div>
+ </div>
+ <div id="satelliteView" hidden>
+  <div class="mapframe satellite"><iframe title="Google Maps satelit – UMPSA Kampus Gambang" src="https://maps.google.com/maps?q=UMPSA%20Kampus%20Gambang&t=k&z=17&output=embed" width="100%" height="480" style="border:0;display:block" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>
+  <p style="margin:8px 0 0"><a href="https://www.google.com/maps/search/?api=1&query=UMPSA%20Kampus%20Gambang" target="_blank" rel="noopener">Buka Google Maps penuh ↗</a></p>
+  <div class="note">Google Maps satelit digunakan sebagai rujukan geografi. Full Map dan peta zon kekal sebagai paparan ilustrasi program. GPS belum diselaraskan dengan imej ilustrasi.</div>
  </div>
  <div class="headrow" style="margin-top:26px"><div><h2>Terus ke SDG</h2><p class="lead">Pilih mana-mana matlamat untuk melihat kawasan dan membuka PDF.</p></div><button class="btn" onclick="go('directory')">Buka direktori 17 SDG</button></div>
  <div class="grid" id="quickGrid"></div>
@@ -75,7 +71,7 @@ footer{background:#102f43;color:#d6e5e8;text-align:center;padding:22px;font-size
   <h3 style="margin:9px 0 4px">SDG 04 · Quality Education</h3>
   <p class="lead">Rear Courtyard Between Buildings — penanda SDG 04 pada peta Court Frontage, halaman 3 PDF asal.</p>
   <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
-   <button class="btn" onclick="go('map');document.getElementById('illBtn').click();setMap('court');">Lihat pin SDG 04 pada peta ilustrasi</button>
+   <button class="btn" onclick="go('map');setMap('court');">Lihat pin SDG 04 pada peta ilustrasi</button>
    <a class="btn" href="https://www.google.com/maps/search/?api=1&query=UMPSA%20Kampus%20Gambang%20Rear%20Courtyard" target="_blank" rel="noopener">Cari lokasi di Google Maps ↗</a>
    <a class="btn" href="pdf/SDG04.pdf" target="_blank" rel="noopener">Buka PDF SDG 04 ↗</a>
   </div>
@@ -102,23 +98,25 @@ function showSdg(n){const s=SDGS.find(x=>x.n===n);if(!s)return;go('directory');$
 function renderPins(kind){
  const frame=$('#illustratedFrame');frame.querySelectorAll('.pin').forEach(x=>x.remove());
  let arr=kind==='campus'?OVERVIEW:(DETAIL[kind]||[]);
- arr.forEach(p=>{const b=document.createElement('button');b.className='pin';b.style.left=p.x+'%';b.style.top=p.y+'%';b.textContent=String(p.n).padStart(2,'0');b.title='Buka SDG '+p.n;b.setAttribute('aria-label','Buka SDG '+p.n);b.onclick=()=>{if(p.n===4){const old=document.getElementById('pinInfo');if(old)old.remove();const box=document.createElement('div');box.id='pinInfo';box.className='card';box.style.marginTop='12px';box.innerHTML='<b>SDG 04 · Quality Education</b><p>Rear Courtyard Between Buildings</p><p>Rujukan: Peta Court Frontage, halaman 3.</p><p><a href="pdf/SDG04.pdf" target="_blank">Buka PDF SDG 04 ↗</a> · <a href="https://www.google.com/maps/search/?api=1&query=UMPSA%20Kampus%20Gambang%20Rear%20Courtyard" target="_blank">Cari di Google Maps ↗</a></p>';frame.parentNode.appendChild(box);}else{showSdg(p.n);}};frame.appendChild(b);});
+ arr.forEach(p=>{const b=document.createElement('button');b.className='pin';b.style.left=p.x+'%';b.style.top=p.y+'%';b.textContent=String(p.n).padStart(2,'0');b.title='Buka SDG '+p.n;b.setAttribute('aria-label','Buka SDG '+p.n);b.onclick=()=>showSdg(p.n);frame.appendChild(b);});
  $('#mapLegend').innerHTML=arr.map(p=>`<button class="chip" onclick="showSdg(${p.n})">SDG ${String(p.n).padStart(2,'0')} · ${SDGS.find(s=>s.n===p.n).ms}</button>`).join('');
 }
-const mapFiles={campus:2,court:3,courtyard:3,east:4,industrial:5};
+const mapFiles={full:1,campus:2,court:3,courtyard:3,east:4,industrial:5};
+const mapDescriptions={full:'Full Map memaparkan keseluruhan kawasan program seperti dalam halaman 1 PDF asal.',campus:'Campus Overview menunjukkan susun atur tapak utama UMPSA dan penanda SDG.',court:'Court Frontage menunjukkan lokasi SDG di kawasan hadapan gelanggang.',courtyard:'Courtyard menunjukkan lokasi SDG di kawasan courtyard.',east:'The East menunjukkan kawasan Tasik Paya Besar dan SDG Action Zone 17.',industrial:'Industrial Park menunjukkan lokasi SDG di kawasan Paya Besar Industrial Park.'};
 function setMap(kind){
  document.querySelectorAll('[data-map]').forEach(b=>b.classList.toggle('active',b.dataset.map===kind));
+ if(kind==='satellite'){$('#illustratedView').hidden=true;$('#satelliteView').hidden=false;return;}
+ $('#satelliteView').hidden=true;$('#illustratedView').hidden=false;
  $('#illustratedImage').src=`assets/maps/source_page_${mapFiles[kind]}.jpg`;
  $('#illustratedImage').alt='Peta ilustrasi '+kind;
+ $('#mapNote').textContent=mapDescriptions[kind]+' Penanda GPS belum diselaraskan; kedudukan sebenar memerlukan proses kalibrasi.';
  renderPins(kind);
 }
 document.querySelectorAll('[data-map]').forEach(b=>b.addEventListener('click',()=>setMap(b.dataset.map)));
-$('#satBtn').onclick=()=>{ $('#satView').hidden=false;$('#illView').hidden=true;$('#satBtn').classList.add('active');$('#illBtn').classList.remove('active');};
-$('#illBtn').onclick=()=>{ $('#satView').hidden=true;$('#illView').hidden=false;$('#illBtn').classList.add('active');$('#satBtn').classList.remove('active');setMap('campus');};
 function sdgCard(s){return `<article class="card sdgcard" data-sdg="${s.n}"><div class="num">${String(s.n).padStart(2,'0')}</div><div><h3>SDG ${s.n} · ${s.ms}</h3><p><b>${s.en}</b></p><p>${s.desc}</p><p><span class="badge">${s.area}</span></p><p><b>Lokasi:</b> ${s.location}</p><p>PDF asal: halaman ${s.pages}</p><a href="${s.pdf}" target="_blank" rel="noopener">Buka PDF SDG ${String(s.n).padStart(2,'0')} →</a></div></article>`;}
 function renderDirectory(){const q=$('#search').value.toLowerCase();$('#sdgGrid').innerHTML=SDGS.filter(s=>(`sdg ${s.n} ${s.ms} ${s.en} ${s.area} ${s.location}`).toLowerCase().includes(q)).map(sdgCard).join('');}
 $('#search').addEventListener('input',renderDirectory);renderDirectory();
 $('#quickGrid').innerHTML=SDGS.map(s=>`<article class="card"><span class="badge">SDG ${String(s.n).padStart(2,'0')}</span><h3>${s.ms}</h3><p class="lead">${s.area}</p><a href="#" onclick="showSdg(${s.n});return false">Lihat lokasi & PDF →</a></article>`).join('');
 $('#pdfGrid').innerHTML=SDGS.map(s=>`<article class="card"><span class="badge">SDG ${String(s.n).padStart(2,'0')}</span><h3>${s.ms}</h3><p class="lead">Halaman ${s.pages}</p><a class="btn" href="${s.pdf}" target="_blank" rel="noopener">Buka PDF</a></article>`).join('');
-renderPins('campus');
+setMap('full');
 </script></body></html>
